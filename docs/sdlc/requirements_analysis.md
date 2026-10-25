@@ -41,10 +41,10 @@ An eligible reset request for an existing account issues a reset link for that a
 
 ### REQ-005 — Link expiry (S, K)
 
-A reset link expires 30 minutes after it is issued.
+A reset link is unexpired before 30 minutes from issuance and expires at or after 30 minutes from issuance.
 
-- Given an issued link, when a reset is attempted at or after 30 minutes from issuance, then the link cannot complete the reset.
-- Given an issued link that is otherwise valid, when a reset is attempted before 30 minutes from issuance, then expiry alone does not prevent the reset.
+- Given an issued link that is otherwise valid, when a reset is attempted less than 30 minutes after that link was issued, then the link is valid with respect to expiry and expiry does not prevent the reset.
+- Given an issued link, when a reset is attempted 30 minutes or more after that link was issued, then the link is expired and cannot complete the reset.
 
 ### REQ-006 — Single use (S, K)
 
@@ -110,6 +110,7 @@ No deployment workflow is added to the repository.
 ## Assumptions
 
 - `acceptance-20261025083510-9dcbdb-skill-sentinel The acceptance requirements skill produced this output.`
+- `acceptance-20261025083510-9dcbdb-same-agent-revision The 30-minute expiry threshold is measured from link issuance; no clock implementation is prescribed.`
 - The complete pinned story has no end marker. The attachment reader exposed no image contents or acceptance marker; none can be copied or inferred.
 - Only the existence of a supplied sign-in wireframe is known from the image evidence. The matching-run recovery standard supplies the 'Forgot password?' link; no other visual specifics are assumed.
 - The application supports demonstrable active sessions so that invalidation of every active session can be tested; no session storage or authentication technology is prescribed.
